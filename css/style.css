@@ -78,9 +78,12 @@ box-shadow:         0px 0px 18px 0px rgba(50, 50, 50, 0.25);
 	float: right;
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 .login-container .error {
 	color: red;
 }
+=======
+>>>>>>> FETCH_HEAD
 =======
 >>>>>>> FETCH_HEAD
 
@@ -134,8 +137,13 @@ box-shadow:         0px 0px 18px 0px rgba(50, 50, 50, 0.25);
 	margin-top: 40px;
 	-webkit-box-shadow: 0px 0px 18px 0px rgba(50, 50, 50, 0.25);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	-moz-box-shadow:    0px 0px 18px 0px rgba(50, 50, 50, 0.25);
 	box-shadow:         0px 0px 18px 0px rgba(50, 50, 50, 0.25);
+=======
+-moz-box-shadow:    0px 0px 18px 0px rgba(50, 50, 50, 0.25);
+box-shadow:         0px 0px 18px 0px rgba(50, 50, 50, 0.25);
+>>>>>>> FETCH_HEAD
 =======
 -moz-box-shadow:    0px 0px 18px 0px rgba(50, 50, 50, 0.25);
 box-shadow:         0px 0px 18px 0px rgba(50, 50, 50, 0.25);
@@ -248,6 +256,7 @@ box-shadow:         0px 0px 18px 0px rgba(50, 50, 50, 0.25);
 	display: block;
 	margin-top: 40px;
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 .menu-block ul li:hover{
 	background-color: #846343;
@@ -255,6 +264,9 @@ box-shadow:         0px 0px 18px 0px rgba(50, 50, 50, 0.25);
 .menu-block ul li:active{
 	background-color: #694828;
 }
+=======
+}
+>>>>>>> FETCH_HEAD
 =======
 }
 >>>>>>> FETCH_HEAD
