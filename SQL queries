@@ -1,0 +1,47 @@
+CREATE DATABASE `waycup`;
+
+CREATE USER 'waycup-admin'@'localhost' IDENTIFIED BY 'dsSccdZcSJPrKZ79';
+
+GRANT SELECT, INSERT, UPDATE ON `waycup`.* TO 'waycup-admin'@'localhost';
+
+USE `waycup`;
+CREATE TABLE `members` (
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `username` VARCHAR(30) NOT NULL,
+    `nicename` VARCHAR(30) NOT NULL,
+    `email` VARCHAR(50) NOT NULL,
+    `password` CHAR(128) NOT NULL,
+    `salt`     CHAR(128) NOT NULL 
+) ENGINE = InnoDB;
+
+CREATE TABLE `loginAttempts` ( 
+    `userID` INT(11) NOT NULL,
+    `time` VARCHAR(30) NOT NULL
+) ENGINE=InnoDB;
+
+INSERT INTO `members` VALUES(1, 'admin', 'test@example.com',
+'00807432eae173f652f2064bdca1b61b290b52d40e429a7d295d76a71084aa96c0233b82f1feac45529e0726559645acaed6f3ae58a286b9f075916ebf66cacc',
+'f9aab579fc1b41ed0c44fe4ecdbfcdb4cb99b9023abb241a6db833288f4eea3c02f76e0d35204a8695077dcf81932aa59006423976224be0390395bae152d4ef');
+
+CREATE TABLE `clients` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`card`			VARCHAR(10) NOT NULL,
+	`lastname` 		VARCHAR(50) NOT NULL,
+	`middlename` 	VARCHAR(50) NOT NULL,
+	`name` 			VARCHAR(50) NOT NULL,
+	`telephone`		VARCHAR(10) NOT NULL,
+	`email` 		VARCHAR(50) NOT NULL,
+	`coffees`	INT(10) 	NOT NULL
+
+) ENGINE=InnoDB;
+
+CREATE TABLE `menu` (
+	`id` INT NON NULL AUTO_INCREMENT PRIMARY KEY,
+	`image` 	VARCHAR(50)  NOT NULL,
+	`name` 		VARCHAR(25)  NOT NULL, 
+	`price` 	DECIMAL(5,2) NOT NULL, 
+	`amount`	INT(5)		 NOT NULL,
+	`isCoffee`   BOOLEAN 	 NOT NULL
+
+) ENGINE=InnoDB;
+
