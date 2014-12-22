@@ -1,22 +1,24 @@
 <?php 
 class menu_item {
 
+	public $id;
 	public $imageSource;
 	public $name;
 	public $price;
 	public $amount;
 	public $isCoffee;
 
-	function __construct($imageSource, $name, $price, $amount, $isCoffee) {
+	function __construct($id, $imageSource, $name, $price, $amount, $isCoffee) {
 		$this->imageSource  = $imageSource;
 		$this->name 		= $name;
 		$this->price 		= $price;
 		$this->amount 		= $amount;
 		$this->isCoffee 	= $isCoffee;
+		$this->id 			= $id;
 	}
 
 	function show() {
-		echo '<li onclick="addToCart(\'' . $this->name . '\',' . $this->price . ')";>';
+		echo '<li onclick="retrieveList(' . $this->id . ');";>';
 			echo "<span>" . $this->name   . "</span>";
 			echo "<br>";
 			if ($this->isCoffee) $isLiquid = "мл"; else $isLiquid = "г";
@@ -37,7 +39,7 @@ if (!$stmt = $mysqli->query('SELECT id, image, name, price, amount, isCoffee FRO
 	echo '<h2>Сорян, что-то пошло не так :С</h2>';
 } else {
     while ($row = $stmt->fetch_assoc()) {
-    	$anElement = new menu_item($row['image'], $row['name'], $row['price'], $row['amount'], $row['isCoffee']);
+    	$anElement = new menu_item($row['id'], $row['image'], $row['name'], $row['price'], $row['amount'], $row['isCoffee']);
     	array_push($menu, $anElement);
     }
 }

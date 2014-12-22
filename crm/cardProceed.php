@@ -29,6 +29,6 @@ $qry_result = $mysqli->query($query);
 	} else {
 		$display_string .= "У нас таких карт нет. Хуйня какая-то.";
 	}
-
+$mysqli->close();
 echo $display_string;
 ?>

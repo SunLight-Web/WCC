@@ -19,14 +19,16 @@ class client_clients {
 	public $middlename;
 	public $telephone;
 	public $coffees;
+	public $bonuses;
 
 	function __construct($card, $name, $middlename, $lastname, $telephone, $coffees) {
 		$this->card  		= $card;
 		$this->name 		= $name;
 		$this->middlename 	= $middlename;
 		$this->lastname 	= $lastname;
-		$this->telephone 	= $telephone;
+		$this->telephone 	= telephonePrepare($telephone);
 		$this->coffees		= $coffees;
+		$this->bonuses 		= $coffees % 6;
 		
 	}
 
@@ -34,9 +36,9 @@ class client_clients {
               echo "<tr>";
                   echo "<td>" . $this->card . "</td>";
                   echo "<td>" . $this->lastname . " " . $this->name . " " . $this->middlename . "</td>";
-                  echo "<td>" . telephonePrepare($this->telephone) . "</td>";
+                  echo "<td>" . $this->telephone . "</td>";
                   echo "<td>";
-                    for ($coffee=1; $coffee <= $this->coffees%6; $coffee++) { 
+                    for ($coffee=1; $coffee <= $this->bonuses; $coffee++) { 
                       echo "<i></i>";
                     }
                   echo "</td>";
