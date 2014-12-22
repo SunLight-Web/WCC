@@ -30,7 +30,7 @@ function retrieveCardData(){
 	// Create a function that will receive data sent from the server
 	ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
-			var ajaxDisplay = document.getElementById('ajaxDiv');
+			var ajaxDisplay = document.getElementById('ajax-in-client-menu');
 			ajaxDisplay.innerHTML = ajaxRequest.responseText;
 		}
 	}
