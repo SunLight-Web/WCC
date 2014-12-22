@@ -1,5 +1,7 @@
 <?php
 include_once('../inc/dbConnect.php');
+	// TODO:
+	// SECURITY!!!!!!!!
 
 	// Retrieve data from Query String
 $cardnum = $_GET['cardnum'];
@@ -25,7 +27,7 @@ $qry_result = $mysqli->query($query);
 		$display_string .= " Текущее количество бонусов: <b>" .($row['coffees'] % 6) . ".</b>";
 
 	} else {
-		$display_string .= "Клиента в базе нет, добавим. Не ссы, спроси как зовут.";
+		$display_string .= "У нас таких карт нет. Хуйня какая-то.";
 	}
 
 echo $display_string;

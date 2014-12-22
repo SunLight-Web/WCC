@@ -13,16 +13,9 @@ function addToCart(name, price) {
 
 	var rubLabel   = document.createTextNode('руб');
 	newRow.insertCell(2).appendChild(rubLabel);
-
-	var summary = document.getElementById('summary');
-	var priceFloat 		= parseFloat(price);
-	var summaryFloat 	= parseFloat(summary.value); 
-	alert(typeof priceFloat);
-	alert(typeof summaryFloat);
-	summary.value = priceFloat + summaryFloat;
 }
 
-function ajaxFunction(){
+function ajaxChecknDo(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
 	
 	try{
@@ -42,7 +35,11 @@ function ajaxFunction(){
 			}
 		}
 	}
+	return ajaxRequest;
+}
 
+function retrieveCardData(){
+	ajaxRequest = ajaxChecknDo();
 	// Create a function that will receive data sent from the server
 		ajaxRequest.onreadystatechange = function(){
 		if(ajaxRequest.readyState == 4){
@@ -54,6 +51,13 @@ function ajaxFunction(){
 	var queryString = "?cardnum=" + cardnum;
 	ajaxRequest.open("GET", "cardProceed.php" + queryString, true);
 	ajaxRequest.send(null); 
+}
+
+function retrieveList(){
+	ajaxRequest = ajaxChecknDo();
+		ajaxRequest.onreadystatechange = function(){
+		if(ajaxRequest.readyState == 4){
+		}
 }
 
 </script>
