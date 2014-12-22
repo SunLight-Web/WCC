@@ -19,20 +19,18 @@
               <h4>Клиент:</h4>
 
               <form name='myForm' onsubmit="return false;">
-              Card: <input type='text' maxlength="4" id='cardnum' onchange="ajaxFunction()" /> <br />
+              Card: <input type='text' maxlength="4" id='cardnum' onchange="retrieveCardData();" /> <br />
 
               </form>
               <div id='ajaxDiv'></div>
               <br/>
               <h4>Заказ клиента:</h4>
-
-
+              <br/>
               <table id="shoplist">
                 <tbody>
                                   
                 </tbody>
               </table>  
-              <input type="text" id='summary' />
            </div>
          </div>
        </div>

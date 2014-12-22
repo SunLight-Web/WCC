@@ -25,6 +25,11 @@ class menu_item {
 		echo "</li>";
 	}
 }
+
+
+// puttin on the elements from the db into an array $menu
+
+
 $menu = array();
 
 if (!$stmt = $mysqli->query('SELECT id, image, name, price, amount, isCoffee FROM menu')) {
@@ -36,5 +41,7 @@ if (!$stmt = $mysqli->query('SELECT id, image, name, price, amount, isCoffee FRO
     	array_push($menu, $anElement);
     }
 }
+
+// /$menu_item
 ?>
 
