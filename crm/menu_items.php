@@ -18,7 +18,7 @@ class menu_item {
 	}
 
 	function show() {
-		echo '<li onclick="retrieveList(' . $this->id . ');";>';
+		echo '<li>';
 			echo "<span>" . $this->name   . "</span>";
 			echo "<br>";
 			if ($this->isCoffee) $isLiquid = "мл"; else $isLiquid = "г";
@@ -45,5 +45,7 @@ if (!$stmt = $mysqli->query('SELECT id, image, name, price, amount, isCoffee FRO
 }
 
 // /$menu_item
+
+json_encode($menu);
 ?>
 

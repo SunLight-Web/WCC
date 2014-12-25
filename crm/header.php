@@ -27,10 +27,11 @@ wcp_session_start();
 
     </title>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script> 
     <link href="../css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="../css/style.css" rel="stylesheet" media="screen">
     <link rel="shortcut icon" type="image/x-icon" href="../img/icon.gif" />
+
   </head>
   <body>
    <div class="container header-crm">

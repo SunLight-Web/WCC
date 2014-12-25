@@ -1,6 +1,4 @@
 <script>
-function addToCart(idOfItem) {
-}
 
 function ajaxChecknDo(){
 	var ajaxRequest;  // The variable that makes Ajax possible!
@@ -38,19 +36,6 @@ function retrieveCardData(){
 	var queryString = "?cardnum=" + cardnum;
 	ajaxRequest.open("GET", "cardProceed.php" + queryString, true);
 	ajaxRequest.send(null); 
-}
-
-function retrieveList(idOfItem){
-	ajaxRequest = ajaxChecknDo();
-	ajaxRequest.onreadystatechange = function(){
-		if(ajaxRequest.readyState == 4){
-			var ajaxDisplay = document.getElementById('shoplist');
-			ajaxDisplay.innerHTML += ajaxRequest.responseText;
-		}
-	}
-	var queryString = "?itemID=" + idOfItem;
-	ajaxRequest.open("GET", "itemProceed.php" + queryString, true);
-	ajaxRequest.send(null);
 }
 
 </script>
