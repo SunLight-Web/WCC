@@ -5,6 +5,7 @@ class item_check {
 	public $orderlist;
 	public $cash;
 	public $timecode;
+	public $cups = 0;
 
 	function __construct($id, $clientid, $orderlist, $cash, $timecode) {
 		$this->id 				= $id;
@@ -14,6 +15,9 @@ class item_check {
 		$this->timecode 		= substr($timecode, 10, strlen($timecode));
 
 		
+	}
+	function getcups(){
+
 	}
 
 
@@ -27,14 +31,20 @@ class item_check {
 	$cleintInfo   = $mysqli->query("SELECT `card`, `name`, `lastname` FROM `clients` WHERE `id` = '$this->clientid'");
 	$cleintInfo   = $cleintInfo->fetch_assoc();
 	while ($row = $stmt->fetch_assoc()) {
-		if ($row['isCoffee']) { $isLiquid = $row['amount'] . 'мл'; } else { $isLiquid = ''; }
-		$orderlistArr[$row['id']] = $row['name'] . ' ' . $isLiquid ;
+		if ($row['isCoffee']) { 
+			$isLiquid = $row['amount'] . 'мл'; 
+			$this->cups++;
+		} else { 
+			$isLiquid = ''; 
+		}
+		$orderlistArr[$row['id']] = $row['name'] . ' ' . $isLiquid;
 	}
 
 	$ordered = explode('.',$this->orderlist);
 
 	foreach ($ordered as $value) {
 		$orderlistStr .= $orderlistArr[$value] . "<br/>";
+
 	}
 
 
@@ -67,7 +77,7 @@ die();
          <div class="main-content">
          <h3>Заказы:</h3>
          <div class="table-client">
-         <table>
+         <table id='summary-table'>
          <thead>
          	<tr>
          		<td>
@@ -89,12 +99,29 @@ die();
          </thead>
          <tbody>
 <?php
+$total = 0;
+$totalCups = 0;
+
     foreach ($checks as $singleCheck) {
     	$singleCheck->show();
+    	$total += $singleCheck->cash;
+    	$totalCups += $singleCheck->cups;
     }
 ?>
 		</tbody>
 		</table>
+		</div>
+		<h5>Всего говна за день:</h5>
+		<div id='total'>Считаю...
+			<script type="text/javascript">
+				var rows = document.getElementById('summary-table').getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
+				var total = document.getElementById('total');
+				total.innerHTML = '<b>' + rows + '</b> заказов,<br/>';
+
+
+			</script>
+			<?php echo 'Бабок: <b>' . $total . '</b>₽' . '<br/>	'; ?>
+			<?php echo 'Стаканов: <b>' . $totalCups . '</b>';?>
 		</div>
          </div>
        </div>
