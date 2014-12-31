@@ -1,5 +1,4 @@
 <?php include_once('menu_items.php'); ?>
-<?php include_once('../js/ordering.js'); ?>
 
 <!-- React integration -->
 
@@ -10,18 +9,15 @@
 
   <div class="span10">
     <div class="main-content">
-      <div class="menu-block">
+      <div class="menu-block">		
+      		<div id="tooltip">
 
-        <div class="client-in-menu-block">
-        <h4>Клиент</h4>
+          		<a onclick="this.parentNode.style.display = 'none';">x</a>
+          		<div id="tooltipText"></div>
+          	</div>
+          <h3>Оформление заказа</h3>
+          <div id="menu-react-mount"></div>
 
-        <form name='myForm' onsubmit="return false;">
-         Номер карты: 
-         <input type='text' maxlength="4" id='cardnum' onchange="retrieveCardData();" /> <br />
-        </form>
-        <div id='ajax-in-client-menu'></div>
-        </div>
-          <div id="menu"></div>
          </div>
        </div>
        </div>
