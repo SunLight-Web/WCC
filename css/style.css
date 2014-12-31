@@ -219,7 +219,6 @@ body{
 	background-color: #795838;
 }
 .menu-block ul li span{
-	font-weight: bold;
 	font-size: 16px;
 }
 .menu-block ul li strong{
@@ -282,6 +281,7 @@ body{
 	border: none;
 }
 .order button{
+	margin: 10px;
 	width: 160px;
 	height: 40px;
 	background-color: #ebae08;
@@ -289,4 +289,28 @@ body{
 	border-bottom: 3px solid orange;
 	color: white;
 }
+#tooltip {
+	padding: 10px;
+	display: none;
+	width: 10%;
+	position:fixed;
+	right: 0;
+	bottom: 0;
+	height: 7%;
+	z-index:9000;
+	padding-bottom: 1px;
+	margin: 5px;
+	background-color: white;
+	-webkit-box-shadow: 0px 0px 18px 0px rgba(50, 50, 50, 0.25);
+	-moz-box-shadow:    0px 0px 18px 0px rgba(50, 50, 50, 0.25);
+	box-shadow:         0px 0px 18px 0px rgba(50, 50, 50, 0.25);
+}
 
+#tooltip a{
+	color: #dddddd;
+	float: right;
+	margin: 5px;
+	margin-top: 1px;
+	font-weight: bold;
+	font-size: 20px;
+}
