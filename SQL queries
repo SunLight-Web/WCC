@@ -45,3 +45,11 @@ CREATE TABLE `menu` (
 
 ) ENGINE=InnoDB;
 
+CREATE TABLE `check` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`clientid` INT(11) NOT NULL,
+	`orderlist` varchar(50) NOT NULL,
+	`cash` decimal(6,2) NOT NULL,
+	`timecode` datetime NOT NULL
+) ENGINE=InnoDB;
+

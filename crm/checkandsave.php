@@ -32,7 +32,7 @@ if (isset($_POST['cash'])){
 }
 setlocale(LC_ALL, 'rus');
 date_default_timezone_set('Europe/Moscow');
-$timecode = date('Y-m-d h:i:s');
+$timecode = date('Y-m-d H:i:s');
 
 if (!isset($_POST['idset'])) {
 	echo "ЗАКАЗ ПУСТОЙ, ИДИ НАХУЙ!";
