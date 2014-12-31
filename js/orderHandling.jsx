@@ -107,7 +107,7 @@
 								idset += '.' + orderElements[i].id;
 								orderElements[i].quanity--;
 							}
-							if (orderElements[i].isCoffee){
+							if (orderElements[i].isCoffee == 1){
 								coffees++;
 							}
 		                }
