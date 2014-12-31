@@ -31,7 +31,7 @@ CREATE TABLE `clients` (
 	`name` 			VARCHAR(50) NOT NULL,
 	`telephone`		VARCHAR(10) NOT NULL,
 	`email` 		VARCHAR(50) NOT NULL,
-	`coffees`	INT(10) 	NOT NULL
+	`coffees`		INT(10) 	NOT NULL
 
 ) ENGINE=InnoDB;
 
@@ -41,7 +41,16 @@ CREATE TABLE `menu` (
 	`name` 		VARCHAR(25)  NOT NULL, 
 	`price` 	DECIMAL(5,2) NOT NULL, 
 	`amount`	INT(5)		 NOT NULL,
-	`isCoffee`   BOOLEAN 	 NOT NULL
+	`isCoffee`  BOOLEAN 	 NOT NULL
 
 ) ENGINE=InnoDB;
 
+CREATE TABLE `check` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`clientid` 			INT NOT NULL,
+	`orderlist` 		VARCHAR(50),
+	`cash`				DECIMAL(5,2),
+	`time`				TIME,
+	`day`				DATE
+
+) ENGINE=InnoDB;

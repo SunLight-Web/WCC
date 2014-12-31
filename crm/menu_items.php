@@ -21,7 +21,7 @@ class menu_item {
 		echo '<li>';
 			echo "<span>" . $this->name   . "</span>";
 			echo "<br>";
-			if ($this->isCoffee) $isLiquid = "мл"; else $isLiquid = "г";
+			if ($this->isCoffee) $isLiquid = "мл"; else $isLiquid = "шт";
 			echo $this->amount . $isLiquid;
 			echo "<i>"    . $this->price . " руб</i>";
 		echo "</li>";
@@ -37,6 +37,8 @@ $menu = array();
 if (!$stmt = $mysqli->query('SELECT id, image, name, price, amount, isCoffee FROM menu')) {
 
 	echo '<h2>Сорян, что-то пошло не так :С</h2>';
+	die();
+
 } else {
     while ($row = $stmt->fetch_assoc()) {
     	$anElement = new menu_item($row['id'], $row['image'], $row['name'], $row['price'], $row['amount'], $row['isCoffee']);
