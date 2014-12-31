@@ -13,22 +13,16 @@ $query = "SELECT * FROM clients WHERE card = '$cardnum'";
 
 	//Execute query
 $qry_result = $mysqli->query($query);	
-
-	$display_string = '';
-
+	echo '{';
 	if ($qry_result->num_rows <> 0) {
 		$row = mysqli_fetch_array($qry_result);
-		if ('' == $row['name']) {
-			$display_string .= " Клиент – хуйло и зовут его никак. ";
-		} else {
-			$display_string .= " Клиента зовут <b>$row[name]</b>. ";	
-		}
-		$display_string .= " Человек купил у нас <b>$row[coffees]</b> кофе. </td><br/>";
-		$display_string .= " Текущее количество бонусов: <b>" .($row['coffees'] % 6) . ".</b>";
 
-	} else {
-		$display_string .= "У нас таких карт нет. Хуйня какая-то.";
+		echo '"name":"' . $row['name'] . '",';
+		echo '"coffees":"' . $row['coffees'] . '",';
+		echo '"bonuses":"' . $row['coffees']%6 . '"';
+ 	} else {
+		echo "noElements: true";
 	}
+	echo '}';
 $mysqli->close();
-echo $display_string;
 ?>
