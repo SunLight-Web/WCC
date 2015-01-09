@@ -20,38 +20,54 @@ class item_check {
 
 	}
 
+	function getOrderedList(){
+		$mysqli = $GLOBALS['mysqli'];
+		$ordered = explode('.',$this->orderlist);
+		$preparedStrings = array();
+		$ban = array();
+		foreach ($ordered as $value) {
+			$query = "SELECT `id`,`name`,`amount`,`isCoffee` FROM `menu` WHERE `id` = " . $value;
+			$stmt  = $mysqli->query($query);
+			$row = $stmt->fetch_assoc();
+			if (!in_array($row['id'], $ban)) {
+				$string = '';
+				$string .= $row['name'] . ' ';
+				if ($row['isCoffee'] == 1) { $string .= $row['amount'] . 'мл'; } 
+				$string .= '<br/>';
+				array_push($preparedStrings, $string);
+			} else {
+				$string .= 'Дохуя говна<br/>';
+			}
+		array_push($ban, $row['id']);
+		}
+		return $preparedStrings;
+	}
 
 	function show() {
-		// WTF IS THIS SHIT?
-	$mysqli = new mysqli(HOST, USER, PASSWORD, DATABASE);
-	$mysqli->set_charset("utf8");
-	$stmt = $mysqli->query("SELECT `id`,`name`,`amount`,`isCoffee` FROM `menu`");
-	$orderlistArr = array();
-	$orderlistStr = '';
+	$mysqli = $GLOBALS['mysqli'];
 	$cleintInfo   = $mysqli->query("SELECT `card`, `name`, `lastname` FROM `clients` WHERE `id` = '$this->clientid'");
 	$cleintInfo   = $cleintInfo->fetch_assoc();
-	while ($row = $stmt->fetch_assoc()) {
-		if ($row['isCoffee']) { 
-			$isLiquid = $row['amount'] . 'мл'; 
-			$this->cups++;
-		} else { 
-			$isLiquid = ''; 
-		}
-		$orderlistArr[$row['id']] = $row['name'] . ' ' . $isLiquid;
-	}
 
-	$ordered = explode('.',$this->orderlist);
-
-	foreach ($ordered as $value) {
-		$orderlistStr .= $orderlistArr[$value] . "<br/>";
-
-	}
-
+	// while ($row = $stmt->fetch_assoc()) {
+	// 	if ($row['isCoffee']) { 
+	// 		$isLiquid = $row['amount'] . 'мл'; 
+	// 		$this->cups++;
+	// 	} else { 
+	// 		$isLiquid = ''; 
+	// 	}
+	// 	$orderlistArr[$row['id']] = $row['name'] . ' ' . $isLiquid;
+	// }
 
 
               echo "<tr>";
               	echo "<td>" . $cleintInfo['card'] . '<br/>' . $cleintInfo['name'] . ' ' . $cleintInfo['lastname'] .   "</td>";
-              	echo "<td>"  . $orderlistStr .  "</td>";
+              	echo "<td>";
+    // foreasch for preapred array of orders goes here.
+              	$preparedStrings = $this->getOrderedList();
+              		foreach ($preparedStrings as $string) {
+              			echo $string;
+              		}
+              	echo "</td>";
               	echo "<td>" . $this->cash . "₽</td>";
               	echo "<td>" . $this->timecode . "</td>";
               	echo "<td>" . "<a ondblclick='alert(\"Я пока не реализовал это дерьмо\")'>x</a>" . "</td>";
@@ -60,8 +76,8 @@ class item_check {
 }
 
 $checks = array();
-
-if (!$stmt = $mysqli->query("SELECT `id`, `clientid`, `orderlist`, `cash`, `timecode` FROM `check`")) {
+$query  = "SELECT `id`, `clientid`, `orderlist`, `cash`, `timecode` FROM `check` WHERE `timecode` BETWEEN '".  date('Ymd') . "' AND '" . date('Ymd',strtotime('+1 days')) . "'	";
+if (!$stmt = $mysqli->query($query)) {
 echo '<h2>Сорян, что-то пошло не так :С</h2>';
 die();
 } else {
