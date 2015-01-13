@@ -104,8 +104,12 @@
 			            for (var i = 0; i < orderElements.length; i++) {
 							idset += '.' + orderElements[i].id;
 							while (orderElements[i].quanity != 1){
+                                if (orderElements[i].isCoffee == 1){
+                                    coffees++;
+                                }
 								idset += '.' + orderElements[i].id;
 								orderElements[i].quanity--;
+
 							}
 							if (orderElements[i].isCoffee == 1){
 								coffees++;
