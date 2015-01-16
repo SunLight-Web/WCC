@@ -1,4 +1,5 @@
 <?php 
+include('../inc/dbConnect.php');
 class menu_item {
 
 	public $id;
@@ -6,46 +7,53 @@ class menu_item {
 	public $name;
 	public $price;
 	public $amount;
-	public $isCoffee;
+	public $category;
 
-	function __construct($id, $imageSource, $name, $price, $amount, $isCoffee) {
+	function __construct($id, $imageSource, $name, $price, $amount, $category) {
 		$this->imageSource  = $imageSource;
 		$this->name 		= $name;
 		$this->price 		= $price;
 		$this->amount 		= $amount;
-		$this->isCoffee 	= $isCoffee;
+		$this->category 	= $category;
 		$this->id 			= $id;
 	}
 
-	function show() {
-		echo '<li>';
-			echo "<span>" . $this->name   . "</span>";
-			echo "<br>";
-			if ($this->isCoffee) $isLiquid = "мл"; else $isLiquid = "г";
-			echo $this->amount . $isLiquid;
-			echo "<i>"    . $this->price . " руб</i>";
-		echo "</li>";
-	}
 }
 
+class category {
+	public $id;
+	public $name;
 
+	function __construct($id, $name){
+		$this->id = $id;
+		$this->name = $name;
+	}
+}
 // puttin on the elements from the db into an array $menu
 
 
 $menu = array();
+$menu['elements'] = array();
+$menu['categories'] = array();
 
-if (!$stmt = $mysqli->query('SELECT id, image, name, price, amount, isCoffee FROM menu')) {
-
-	echo '<h2>Сорян, что-то пошло не так :С</h2>';
+if (!$stmt = $mysqli->query('SELECT id, image, name, price, amount, category FROM menu')) {
+	echo '<h2>Сорян, что-то пошло не так с менюхой :С</h2>';
 } else {
     while ($row = $stmt->fetch_assoc()) {
-    	$anElement = new menu_item($row['id'], $row['image'], $row['name'], $row['price'], $row['amount'], $row['isCoffee']);
-    	array_push($menu, $anElement);
+    	$anElement = new menu_item($row['id'], $row['image'], $row['name'], $row['price'], $row['amount'], $row['category']);
+    	array_push($menu['elements'], $anElement);
     }
 }
 
-// /$menu_item
 
-json_encode($menu);
+if (!$stmt = $mysqli->query('SELECT id, name FROM menuCategories')) {
+	echo '<h2>Сорян, что-то пошло не так с категориями :С</h2>';
+} else {
+    while ($row = $stmt->fetch_assoc()) {
+    	$anElement = new category($row['id'],$row['name']);
+    	array_push($menu['categories'], $anElement);
+    }
+}
+echo json_encode($menu);
 ?>
 

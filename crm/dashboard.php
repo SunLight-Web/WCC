@@ -118,9 +118,7 @@ die();
        <div class="span10">
          <div class="main-content">
          <h3>Заказы за день #<?php echo $today;?></h3>
-         <a href="?date=<?php echo $day-2 ; ?>"><<</a>
-		 <a href="?date=0"> сегодня </a>
-         <a href="?date=<?php echo $day; ?>">>></a>
+         <a href="?date=<?php echo $day-2 ; ?>"><<</a> 		 <a href="?date=0"> сегодня </a>         <a href="?date=<?php echo $day; ?>">>></a>
          <div class="table-client">
          <table id='summary-table'>
          <thead>

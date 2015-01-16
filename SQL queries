@@ -41,7 +41,8 @@ CREATE TABLE `menu` (
 	`name` 		VARCHAR(25)  NOT NULL, 
 	`price` 	DECIMAL(5,2) NOT NULL, 
 	`amount`	INT(5)		 NOT NULL,
-	`isCoffee`   BOOLEAN 	 NOT NULL
+	`isCoffee`   BOOLEAN 	 NOT NULL,
+	`category`  VARCHAR(50)  NOT NULL
 
 ) ENGINE=InnoDB;
 
@@ -51,5 +52,11 @@ CREATE TABLE `check` (
 	`orderlist` varchar(50) NOT NULL,
 	`cash` decimal(6,2) NOT NULL,
 	`timecode` datetime NOT NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE `menuCategories` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`name` 		VARCHAR(50)  NOT NULL,
+
 ) ENGINE=InnoDB;
 

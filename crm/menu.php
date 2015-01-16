@@ -1,4 +1,4 @@
-<?php include_once('menu_items.php'); ?>
+
 
 <!-- React integration -->
 

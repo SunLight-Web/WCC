@@ -57,6 +57,10 @@
 
     });
 
+    var categorySeparator = React.createClass({
+        render: function(){
+        }
+    });
     var menuElement = React.createClass({
 
     	clickHandler: function(){
@@ -66,7 +70,7 @@
 
     	render: function(){
  			var isLiquid;
- 			if (this.props.isCoffee == 1) {isLiquid = 'мл'} else {isLiquid = 'шт'};
+ 			if (this.props.category == '1') {isLiquid = 'мл'} else {isLiquid = 'шт'};
     		return (
     				<li onClick={this.clickHandler}>
 	    				<span>{this.props.name}</span><strong>{this.props.quanity}</strong>
@@ -84,7 +88,7 @@
     var menuAndOrder = React.createClass({
 
         getInitialState: function(){
-            return { total: 0, menuElements: [], orderElements: []};
+            return { total: 0, menuElements: [], orderElements: [], menuCategories: []};
         },
         
         kEbenyam: function(){
@@ -108,14 +112,14 @@
 			            for (var i = 0; i < orderElements.length; i++) {
 							idset += '.' + orderElements[i].id;
 							while (orderElements[i].quanity != 1){
-                                if (orderElements[i].isCoffee == 1){
+                                if (orderElements[i].category == 1){
                                     coffees++;
                                 }
 								idset += '.' + orderElements[i].id;
 								orderElements[i].quanity--;
 
 							}
-							if (orderElements[i].isCoffee == 1){
+							if (orderElements[i].category == 1){
 								coffees++;
 							}
 		                }
@@ -140,25 +144,32 @@
 
         componentDidMount: function(){ 
             var self = this;
-            var url  = 'menu.json';
+            var url  = 'menu_items.php';
 
             $.getJSON(url, function(result){
-            if(!result || !result.length){
+                elements   = result.elements;
+                categories = result.categories;
+            if(!elements || !elements.length){
                 return;
             }
 
-                var menuElements = result.map(function(p){
+                var menuElements = elements.map(function(p){
                     return {
                         id: p.id,
                         name: p.name,
                         price: p.price,
                         amount: p.amount,
-                        isCoffee: p.isCoffee,
+                        category: p.category,
                         quanity: 0
                     };
-
                 });
-                self.setState({ menuElements: menuElements });
+                var menuCategories = categories.map(function(c){
+                    return {
+                        id:   c.id,
+                        name: c.name
+                    };
+                });
+                self.setState({ menuElements: menuElements, menuCategories: menuCategories });
             });
         },
 
@@ -179,9 +190,6 @@
             for (var i = 0; i < menuElements.length; i++) {
                 if (menuElements[i].id == id) {
                 	menuElements[i].quanity +=1;
-                	if (menuElements[i].isCoffee){
-                		this.props.bonuses++;
-                	}
                 	if (!inOrdersAlready){
                    		orderElements.push(menuElements[i]);
                 	}
@@ -215,29 +223,41 @@
         render: function(){
 
             var self = this;
+            var menuCategories   = this.state.menuCategories;
+            var menuElements     = this.state.menuElements;
+                menuElements     = menuElements.map(function(s){
+                    return <menuElement ref={s.id} name={s.name} price={s.price} category={s.category} amount={s.amount} onClick={self.menuElementClick} />;
+                });
+                
+                var cats = [];
+                menuCategories.forEach(function(c){
+                    cats.push(new Array());
+                    cats[c.id-1].push(<div className="teryterytery"><br/><h5>{c.name}</h5><br/></div>);
+                        menuElements.forEach(function(e){
+                            if (c.id == e.props.category) {
+                                cats[c.id-1].push(e);
+                            }
+                        });
+                    });
 
-            var menuElements = this.state.menuElements.map(function(s){
-                return <menuElement ref={s.id} name={s.name} price={s.price} isCoffee={s.isCoffee} amount={s.amount} onClick={self.menuElementClick} />;
-            });
-
+               
             if(!menuElements.length){
                 menuElements = <div><br/><br/><p>Загрузка данных с сервера...</p></div>;
             }
 
             var orderElements = this.state.orderElements.map(function(s){
-                return <menuElement ref={s.id} name={s.name} price={(s.price*s.quanity).toFixed(2)} isCoffee={s.isCoffee} amount={s.amount} quanity={s.quanity} onClick={self.orderElementClick} />;
+                return <menuElement ref={s.id} name={s.name} price={(s.price*s.quanity).toFixed(2)} category={s.category} amount={s.amount} quanity={s.quanity} onClick={self.orderElementClick} />;
             });
 
             if(!orderElements.length){
                 orderElements = <div><br/><br/><i>Тыкай по элементам, ёба</i></div>;
             }
-
             return (
                 <div>
                     <div className="menu-items">
-                        <h4>Меню</h4>
+                        <h3>Меню</h3>
                         <ul id="list-of-items-in-stock">
-                            {menuElements}
+                            {cats}
                         </ul>
                         <div className="clear"></div>
                     </div>
