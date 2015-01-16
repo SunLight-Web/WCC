@@ -1,4 +1,20 @@
 <?php
+class item {
+	public $id;
+	public $name;
+	public $amount;
+	public $isCoffee;
+	public $quanity;
+	function __construct($id, $name, $amount, $isCoffee, $quanity) {
+		$this->id = $id;
+		$this->name = $name;
+		$this->amount = $amount;
+		$this->isCoffee = $isCoffee;
+		$this->quanity = $quanity;
+	}
+
+}
+
 class item_check {
 	public $id;
 	public $clientid;
@@ -16,30 +32,31 @@ class item_check {
 
 		
 	}
-	function getcups(){
-
-	}
 
 	function getOrderedList(){
 		$mysqli = $GLOBALS['mysqli'];
 		$ordered = explode('.',$this->orderlist);
+		$repeats = array_count_values($ordered);
+		$ordered = array_unique($ordered);
 		$preparedStrings = array();
-		$ban = array();
+		
+
 		foreach ($ordered as $value) {
 			$query = "SELECT `id`,`name`,`amount`,`isCoffee` FROM `menu` WHERE `id` = " . $value;
 			$stmt  = $mysqli->query($query);
 			$row = $stmt->fetch_assoc();
-			if (!in_array($row['id'], $ban)) {
-				$string = '';
-				$string .= $row['name'] . ' ';
-				if ($row['isCoffee'] == 1) { $string .= $row['amount'] . 'мл'; } 
-				$string .= '<br/>';
-				array_push($preparedStrings, $string);
-			} else {
-				$string .= 'Дохуя говна<br/>';
-			}
-		array_push($ban, $row['id']);
+			$element = new item($row['id'], $row['name'], $row['amount'], $row['isCoffee'], $repeats[$value]);
+			$string = '';
+
+			$string .= $element->name . ' ';
+			if ($element->isCoffee == 1) { $string .= $element->amount . 'мл'; $this->cups += 1*$element->quanity;} 
+			$string .= '  x' . $element->quanity;
+			$string .= '<br/>';
+			array_push($preparedStrings, $string);
+
 		}
+		$preparedStrings['strings'] = $preparedStrings;
+		$preparedStrings['cups']    = $this->cups;
 		return $preparedStrings;
 	}
 
@@ -48,25 +65,18 @@ class item_check {
 	$cleintInfo   = $mysqli->query("SELECT `card`, `name`, `lastname` FROM `clients` WHERE `id` = '$this->clientid'");
 	$cleintInfo   = $cleintInfo->fetch_assoc();
 
-	// while ($row = $stmt->fetch_assoc()) {
-	// 	if ($row['isCoffee']) { 
-	// 		$isLiquid = $row['amount'] . 'мл'; 
-	// 		$this->cups++;
-	// 	} else { 
-	// 		$isLiquid = ''; 
-	// 	}
-	// 	$orderlistArr[$row['id']] = $row['name'] . ' ' . $isLiquid;
-	// }
-
 
               echo "<tr>";
               	echo "<td>" . $cleintInfo['card'] . '<br/>' . $cleintInfo['name'] . ' ' . $cleintInfo['lastname'] .   "</td>";
               	echo "<td>";
+
     // foreasch for preapred array of orders goes here.
               	$preparedStrings = $this->getOrderedList();
-              		foreach ($preparedStrings as $string) {
+
+              		foreach ($preparedStrings['strings'] as $string) {
               			echo $string;
               		}
+
               	echo "</td>";
               	echo "<td>" . $this->cash . "₽</td>";
               	echo "<td>" . $this->timecode . "</td>";
@@ -76,7 +86,21 @@ class item_check {
 }
 
 $checks = array();
-$query  = "SELECT `id`, `clientid`, `orderlist`, `cash`, `timecode` FROM `check` WHERE `timecode` BETWEEN '".  date('Ymd') . "' AND '" . date('Ymd',strtotime('+1 days')) . "'	";
+if (isset($_GET['date'])) {
+	$day = $_GET['date'];
+} else {
+	$day = 0;
+}
+
+$dayString = '+' . $day . 'days';
+$today = date('Ymd', strtotime($dayString));
+
+$day++;
+$dayString = '+' . $day . 'days';
+
+$yesterday = date('Ymd',strtotime($dayString));
+
+$query  = "SELECT `id`, `clientid`, `orderlist`, `cash`, `timecode` FROM `check` WHERE `timecode` BETWEEN '". $today  . "' AND '" . $yesterday . "'	";	
 if (!$stmt = $mysqli->query($query)) {
 echo '<h2>Сорян, что-то пошло не так :С</h2>';
 die();
@@ -87,11 +111,16 @@ die();
     }
 
 }
-?>
+?>	
+	
+
 
        <div class="span10">
          <div class="main-content">
-         <h3>Заказы:</h3>
+         <h3>Заказы за день #<?php echo $today;?></h3>
+         <a href="?date=<?php echo $day-2 ; ?>"><<</a>
+		 <a href="?date=0"> сегодня </a>
+         <a href="?date=<?php echo $day; ?>">>></a>
          <div class="table-client">
          <table id='summary-table'>
          <thead>
@@ -116,28 +145,22 @@ die();
          <tbody>
 <?php
 $total = 0;
+$totalMoney = 0;
 $totalCups = 0;
 
     foreach ($checks as $singleCheck) {
     	$singleCheck->show();
-    	$total += $singleCheck->cash;
+    	$totalMoney += $singleCheck->cash;
     	$totalCups += $singleCheck->cups;
+    	$total++;
     }
 ?>
 		</tbody>
 		</table>
 		</div>
 		<h5>Всего говна за день:</h5>
-		<div id='total'>Считаю...
-			<script type="text/javascript">
-				var rows = document.getElementById('summary-table').getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
-				var total = document.getElementById('total');
-				total.innerHTML = '<b>' + rows + '</b> заказов,<br/>';
-
-
-			</script>
-			<?php echo 'Бабок: <b>' . $total . '</b>₽' . '<br/>	'; ?>
-			<?php echo 'Стаканов: <b>' . $totalCups . '</b>';?>
-		</div>
+			<?php echo 'Гостей: <b>' . $total . '</b>' . '<br/>';      ?>
+			<?php echo 'Бабок: <b>' . $totalMoney . '</b>₽' . '<br/>	'; ?>
+			<?php echo 'Стаканов: <b>' . $totalCups . '</b>'; 		   ?>
          </div>
        </div>

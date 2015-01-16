@@ -292,7 +292,8 @@ body{
 #tooltip {
 	padding: 10px;
 	display: none;
-	width: 10%;
+	width: 200px;
+	height: 80px;
 	position:fixed;
 	right: 0;
 	bottom: 0;

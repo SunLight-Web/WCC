@@ -4,6 +4,10 @@
 	    		return { name: '', coffees: 0, bonuses: 0, cardnum : 0 };
 	    	},
 
+            onChangeHandle: function(e){
+                this.submitHandle(e);
+            },
+
 	    	submitHandle: function(e){
 	    		e.preventDefault();
 	    		var cardnum = this.refs.cardnum.getDOMNode().value.trim();
@@ -15,11 +19,12 @@
 	    		    	}
 				    }.bind(this));
 	    	},
-
+            componentDidMount: function(e){
+                this.onChangeHandle(e);
+            },
 	    	render: function(){
 	    		var clientsNameDiv;
 	    		var bonusInfo;
-
 		    	if (this.state.noBonuses) {
 		    		bonusInfo = <strong>Бонусов, естественно, нихуя.</strong>
 		    	} else {
@@ -31,14 +36,13 @@
 	    		} else {
 	    			clientsNameDiv = <div>Клиента зовут <strong>{this.state.name}</strong>.</div>
 	    		}
-
 	    		return (
 	    		<div>
 	    		<h4>Клиент</h4>
 	    			<div>
 	    				<form id="clientForm" onSubmit={this.submitHandle}>
 	    					<label htmlFor="cardnumInput">Номер карты:</label>
-	    					<input type="text" id="cardnumInput" onchange={this.submitHandle} ref='cardnum' maxLength="4"/> <br/>
+                            <input type="number" min="0" onChange={this.onChangeHandle} inputmode="numeric" pattern="[0-9]*" ref='cardnum' maxLength="4"/> <br/>
 	    				</form>
 	    			</div>
 	    			{clientsNameDiv}
