@@ -27,6 +27,7 @@ wcp_session_start();
 
     </title>
     <script src="../js/jquery.js"></script>
+    <script src="../js/main.js"></script>
     <script src="../js/bootstrap.min.js"></script> 
     <link href="../css/bootstrap.css" rel="stylesheet" media="screen">
     <link href="../css/style.css" rel="stylesheet" media="screen">
