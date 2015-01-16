@@ -15,9 +15,8 @@
           		<a onclick="this.parentNode.style.display = 'none';">x</a>
           		<div id="tooltipText"></div>
           	</div>
-          <h3>Оформление заказа</h3>
+          <h3 class="main-title">Оформление заказа</h3>
           <div id="menu-react-mount"></div>
-
          </div>
        </div>
        </div>

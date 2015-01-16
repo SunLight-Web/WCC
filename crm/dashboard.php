@@ -29,10 +29,14 @@ class item_check {
 		$this->orderlist 		= $orderlist;
 		$this->cash 			= $cash;
 		$this->timecode 		= substr($timecode, 10, strlen($timecode));
-
-		
 	}
+<<<<<<< HEAD
 
+=======
+	function getcups(){
+
+	}
+>>>>>>> front
 	function getOrderedList(){
 		$mysqli = $GLOBALS['mysqli'];
 		$ordered = explode('.',$this->orderlist);
@@ -117,27 +121,31 @@ die();
 
        <div class="span10">
          <div class="main-content">
+<<<<<<< HEAD
          <h3>Заказы за день #<?php echo $today;?></h3>
          <a href="?date=<?php echo $day-2 ; ?>"><<</a> 		 <a href="?date=0"> сегодня </a>         <a href="?date=<?php echo $day; ?>">>></a>
+=======
+         <h3 class="main-title">Продажи</h3> 
+		
+		<div class="date-picker">
+			 
+			<a href="">< Туда</a>
+	         <label for="date">Выберите день
+	         <input type="date" name="date"></label>
+	         <a href="">Сюда ></a>
+
+		</div>
+
+>>>>>>> front
          <div class="table-client">
          <table id='summary-table'>
          <thead>
          	<tr>
-         		<td>
-         			Клиент
-         		</td>
-         		<td>
-         			Заказы
-         		</td>
-         		<td>
-         			Бабло
-         		</td>
-         		<td>
-         			Таймкод
-         		</td>
-         		<td>
-         			Х
-         		</td>
+         		<td>Клиент</td>
+         		<td>Заказы</td>
+         		<td>Сумма</td>
+         		<td>Время транзакции</td>
+         		<td>Х</td>
          	</tr>
          </thead>
          <tbody>
@@ -156,9 +164,42 @@ $totalCups = 0;
 		</tbody>
 		</table>
 		</div>
+<<<<<<< HEAD
 		<h5>Всего говна за день:</h5>
 			<?php echo 'Гостей: <b>' . $total . '</b>' . '<br/>';      ?>
 			<?php echo 'Бабок: <b>' . $totalMoney . '</b>₽' . '<br/>	'; ?>
 			<?php echo 'Стаканов: <b>' . $totalCups . '</b>'; 		   ?>
+=======
+
+		<div class="day-stat table-client">
+		<h4>Всего за день:</h4>
+
+		<table>
+				<thead>
+					<tr>
+						<td>Заказов</td>
+						<td>Стаканов</td>
+						<td>Касса</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+						<div id='total'>Считаю...
+							<script type="text/javascript">
+								var rows = document.getElementById('summary-table').getElementsByTagName("tbody")[0].getElementsByTagName("tr").length;
+								var total = document.getElementById('total');
+								total.innerHTML = '<b>' + rows + '</b>';
+							</script>
+						</td>
+						<td><?php echo '<b>' . $totalCups . '</b>';?></td>
+						<td><?php echo '<b>' . $total . '</b>₽'; ?></td>
+					
+					</tr>
+				</tbody>
+
+			</table>		
+		</div>
+>>>>>>> front
          </div>
        </div>

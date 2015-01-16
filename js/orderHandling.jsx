@@ -26,30 +26,46 @@
 	    		var clientsNameDiv;
 	    		var bonusInfo;
 		    	if (this.state.noBonuses) {
-		    		bonusInfo = <strong>Бонусов, естественно, нихуя.</strong>
+		    		bonusInfo = <strong>Бонусов нет</strong>
 		    	} else {
 		    		bonusInfo = <div>Текущее количество бонусов: <strong>{this.state.bonuses}</strong></div>
 		    	}
 
 	    		if (this.state.name == '') {
-					clientsNameDiv = <div>Хуй знает как зовут клиента, но.</div>
+					clientsNameDiv = <div>Видимо, такого клиента у нас нет</div>
 	    		} else {
 	    			clientsNameDiv = <div>Клиента зовут <strong>{this.state.name}</strong>.</div>
 	    		}
 	    		return (
-	    		<div>
-	    		<h4>Клиент</h4>
-	    			<div>
+	    		<div className="menu-info-client">
+	    		
+
+	    			<div className="form-card-info">
 	    				<form id="clientForm" onSubmit={this.submitHandle}>
+<<<<<<< HEAD
 	    					<label htmlFor="cardnumInput">Номер карты:</label>
                             <input type="number" min="0" onChange={this.onChangeHandle} inputmode="numeric" pattern="[0-9]*" ref='cardnum' maxLength="4"/> <br/>
+=======
+	    					<label htmlFor="cardnumInput"><strong>Номер карты:</strong></label>
+	    					<input type="text" id="cardnumInput" onchange={this.submitHandle} ref='cardnum' maxLength="4"/> <br/>
+>>>>>>> front
 	    				</form>
 	    			</div>
+
+                    <div className="info-about-client-card">
 	    			{clientsNameDiv}
+
 					Человек купил у нас <strong>{this.state.coffees}</strong> кофе.
 	    			<br/>
 	    			{bonusInfo}
+                    </div>
+                    <div className="clear"></div>
+
+
 	    			<menuAndOrder cardnum={this.state.cardnum}/>
+                    
+
+
 	    		</div>
 	    		);
 	    	}
@@ -250,28 +266,37 @@
             });
 
             if(!orderElements.length){
-                orderElements = <div><br/><br/><i>Тыкай по элементам, ёба</i></div>;
+                orderElements = <div className="order-war"><i>Сформируйте заказ</i></div>;
             }
             return (
                 <div>
                     <div className="menu-items">
+<<<<<<< HEAD
                         <h3>Меню</h3>
+=======
+>>>>>>> front
                         <ul id="list-of-items-in-stock">
                             {cats}
                         </ul>
                         <div className="clear"></div>
                     </div>
+
                     <div className="order">
-                        <h4>Заказ</h4> 
+                        <h3 className="main-title">Заказ</h3> 
+
                         <ul id="order-list">
                         	{orderElements}
+                            <div className="clear"></div>
                         </ul>
-                        <div className="clear"></div>
-                        <br/>
-                        <strong>Сумма заказа: {this.state.total.toFixed(2)} руб</strong>
-                        <br/><br/>
-                       <button onClick={this.kEbenyam}>Удалить все к ебеням</button>
-                       <button onClick={this.proceed}>Хуйнуть в бд</button>
+                        
+                        
+                        <strong>Сумма заказа: {this.state.total.toFixed(2)} ₽</strong>
+                        
+                       <div className="order-buttons">
+                        <button onClick={this.kEbenyam}>Очистить заказ</button>
+                        <button onClick={this.proceed}>Подтвердить</button>
+                       </div>
+                       
                     </div>
                 </div>
             );

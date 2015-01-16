@@ -1,6 +1,5 @@
-<?php include('header.php'); 	 ?>
-<div class="span10">
-    <div class="main-content">
+
+<div class="block-border-new-client">
 <?php
 if (isset($_POST['sent'])){
 	if (isset($_POST['surname'])){
@@ -42,9 +41,9 @@ if (isset($_POST['sent'])){
 	$query   = "UPDATE `clients` SET `lastname` = '$surname', `name` = '$name', `middlename` = '$middlename', `telephone` = '$tele', `email` = '$email' WHERE `card` = '$cardnum'";
 	echo "<i>";
 	if ($qry_result = $mysqli->query($query)) {
-		echo 'Всё нормас.';
+		echo 'Клиент успешно добавлен!';
 	} else {
-		echo 'Хуйня случилась.';
+		echo 'Что-то пошло не так, клиент не добавлен!';
 	}
 	echo "</i><hr/>";
 }
@@ -56,7 +55,7 @@ if (isset($_POST['sent'])){
 						<label for="cardnum">Номер карты</label>
 					</td>
 					<td>
-						<input type="text" required name="cardnum" placeholder="0000"/>
+						<input type="text" required name="cardnum" placeholder="777"/>
 					</td>
 				</tr>
 				<tr>
@@ -64,7 +63,7 @@ if (isset($_POST['sent'])){
 						<label>Фамилия</label>
 					</td>
 					<td>
-						<input type="text" name="surname" placeholder="Ебанько"/>
+						<input type="text" name="surname" placeholder="Седаков"/>
 					</td>
 				</tr>
 				<tr>
@@ -72,7 +71,7 @@ if (isset($_POST['sent'])){
 						<label>Имя</label>
 					</td>
 					<td>
-						<input type="text" name="name" placeholder="Павел"/>
+						<input type="text" name="name" placeholder="Михаил"/>
 					</td>
 				</tr>
 				<tr>
@@ -80,7 +79,7 @@ if (isset($_POST['sent'])){
 						<label>Отчество</label>
 					</td>
 					<td>
-						<input type="text" name="middlename" placeholder="Игоревич"/>
+						<input type="text" name="middlename" placeholder="Сергеевич"/>
 					</td>
 				</tr>
 				<tr>
@@ -88,7 +87,7 @@ if (isset($_POST['sent'])){
 						<label>Телефон</label>
 					</td>
 					<td>
-						<input type="text" name="tele" placeholder="88001501234"/>
+						<input type="text" name="tele" placeholder="89198998238"/>
 					</td>
 				</tr>
 				<tr>
@@ -96,19 +95,16 @@ if (isset($_POST['sent'])){
 						<label>Email</label>
 					</td>
 					<td>
-						<input type="text" name="email" placeholder="nigger@at.at"/>
+						<input type="text" name="email" placeholder="wedontgiveashit@way-cup.ru"/>
 					</td>
 				</tr>
 				<tr>
 					<td>
 					</td>
 					<td>
-					<input type="submit" name="sent" value="Go" style="float:right;"/>
+					<input type="submit" name="sent" value="Добавить" style="float:right;"/>
 					</td>
 				</tr>
 			</table>
 		</form>
-	</div>
 </div>
-
-<?php include('footer.php'); 	 ?>
